@@ -30,6 +30,33 @@ public class SortMethods {
             }
         }
     }
+    public void sortInserccion(int[] numeros){
+        int n = numeros.length;
+        for(int i = 1; i < n; i++){
+            int key = numeros[i];
+            int j = i - 1;
+            while(j >= 0 && numeros[j] > key){
+                numeros[j + 1] = numeros[j];
+                j = j - 1;
+            }
+            numeros[j + 1] = key;
+        }
+    }
+
+    public void sortSeleccion(int[] numeros){
+        int n = numeros.length;
+        for(int i = 0; i < n - 1; i++){
+            int minIdx = i;
+            for(int j = i + 1; j < n; j++){
+                if(numeros[j] < numeros[minIdx]){
+                    minIdx = j;
+                }
+            }
+            int temp = numeros[minIdx];
+            numeros[minIdx] = numeros[i];
+            numeros[i] = temp;
+        }
+    }
     public void sortShell(int[] numeros){
         int n = numeros.length;
         for(int gap = n/2; gap > 0; gap /= 2){
@@ -76,5 +103,27 @@ public class SortMethods {
             numeros[k++] = right[j++];
         }
     }
-    
+    public void sortQuick(int[] numeros, int low, int high){
+        if(low < high){
+            int pi = partition(numeros, low, high);
+            sortQuick(numeros, low, pi - 1);
+            sortQuick(numeros, pi + 1, high);
+        }
+    }
+    private int partition(int[] numeros, int low, int high){
+        int pivot = numeros[high];
+        int i = (low - 1);
+        for(int j = low; j < high; j++){
+            if(numeros[j] < pivot){
+                i++;
+                int temp = numeros[i];
+                numeros[i] = numeros[j];
+                numeros[j] = temp;
+            }
+        }
+        int temp = numeros[i + 1];
+        numeros[i + 1] = numeros[high];
+        numeros[high] = temp;
+        return i + 1;
+    }
 }
